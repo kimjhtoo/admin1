@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tuflex | 호텔 등록</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css" />
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
+  <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" />
+  <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" />
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+  <!-- iCheck -->
+  <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="/plugins/jqvmap/jqvmap.min.css" />
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css" />
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css" />
+  <!-- summernote -->
+  <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css" />
+
+  <link rel="stylesheet" href="/dist/css/custom.css" />
+</head>
+
+<body class="layout-footer-fixed">
+  <div class="wrapper">
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-link main-logo" style="height: 3rem"> Tuflex </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="/manage/user" class="nav-link">
+                <p>
+                  회원 관리
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/manage/statistics" class="nav-link">
+                <p>
+                  매출 통계
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/manage/hotel" class="nav-link active">
+                <p>
+                  호텔 등록
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+      <button type="button" class="btn btn-primary" id="btn-modify" style="margin-left: 10px; margin-top: 20px">비밀번호
+        변경하기</button>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6"></div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="float-right" style="display: -webkit-box">
+                <button type="button" id="btn-reg" class="btn btn-primary">등록하기</button>
+              </ol>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row pad-side">
+            <form id="frm" method="POST" enctype="multipart/form-data" style="width: 100%">
+              <div class="card-body table-responsive p-0">
+                <div><label>사진</label></div>
+                <div>
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image1" name="image1" />
+                      </div>
+                      <img id="preview1" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image2" name="image2" />
+                      </div>
+                      <img id="preview2" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image3" name="image3" />
+                      </div>
+                      <img id="preview3" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image4" name="image4" />
+                      </div>
+                      <img id="preview4" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image5" name="image5" />
+                      </div>
+                      <img id="preview5" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image6" name="image6" />
+                      </div>
+                      <img id="preview6" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image7" name="image7" />
+                      </div>
+                      <img id="preview7" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image8" name="image8" />
+                      </div>
+                      <img id="preview8" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image9" name="image9" />
+                      </div>
+                      <img id="preview9" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                    <div class="col-3">
+                      <div class="input-group pt-3">
+                        <input type="file" class="form-control" id="image10" name="image10" />
+                      </div>
+                      <img id="preview10" style="width: 200px; height: 200; object-fit: scale-down" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <label>호텔명</label>
+                    <div class="input-group pt-3">
+                      <input type="text" class="form-control" id="name" name="name" />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label>주소</label>
+                    <div class="input-group pt-3">
+                      <input type="text" class="form-control" id="address" name="address" readonly />
+                    </div>
+                  </div>
+                </div>
+                <div class="pt-3">
+                  <div class="row">
+                    <div class="col-12">
+                      <label>호텔 설명</label>
+                      <div class="input-group pt-3">
+                        <textarea class="col-12" id="introduce" name="introduce"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- /.row (main row) -->
+        </div>
+        <!-- /.container-fluid -->
+        <div class="modal fade" id="modal-modify" style="display: none" aria-modal="true" role="dialog">
+          <div class="modal-dialog" style="max-width: 300px">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body" style="text-align: left">
+                <form id="formModify">
+                  <label>현재 비밀번호</label>
+                  <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="password1" name="passwordOriginal"
+                      placeholder="현재 비밀번호" />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <a href="javascript:pw_status(1);"><i class="fa fa-eye-slash" id="eye1"
+                            aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <label>현재 비밀번호</label>
+                  <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="password2" name="passwordNew"
+                      placeholder="새 비밀번호" />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <a href="javascript:pw_status(2);"><i class="fa fa-eye-slash" id="eye2"
+                            aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <label>새 비밀번호 확인</label>
+                  <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="password3" placeholder="새 비밀번호 확인" />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <a href="javascript:pw_status(3);"><i class="fa fa-eye-slash" id="eye3"
+                            aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modal-modify" style="display: none;" aria-modal="true" role="dialog">
+          <div class="modal-dialog" style="max-width: 300px;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body" style="text-align: left;">
+                <form id="formModify">
+                  <label>현재 비밀번호</label>
+                  <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="password1" name="passwordOriginal"
+                      placeholder="현재 비밀번호">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <a href="javascript:pw_status(1);"><i class="fa fa-eye-slash" id="eye1"
+                            aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <label>현재 비밀번호</label>
+                  <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="password2" name="passwordNew" placeholder="새 비밀번호">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <a href="javascript:pw_status(2);"><i class="fa fa-eye-slash" id="eye2"
+                            aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <label>새 비밀번호 확인</label>
+                  <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="password3" placeholder="새 비밀번호 확인">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <a href="javascript:pw_status(3);"><i class="fa fa-eye-slash" id="eye3"
+                            aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary" id="btn-submit-modify" style="width: 100%;"
+                    disabled>등록하기</button>
+                </form>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-inline-block"></div>
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="/plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge("uibutton", $.ui.button);
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <!-- ChartJS -->
+  <script src="/plugins/chart.js/Chart.min.js"></script>
+  <!-- Sparkline -->
+  <script src="/plugins/sparklines/sparkline.js"></script>
+  <!-- JQVMap -->
+  <script src="/plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
+  <!-- daterangepicker -->
+  <script src="/plugins/moment/moment.min.js"></script>
+  <script src="/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Summernote -->
+  <script src="/plugins/summernote/summernote-bs4.min.js"></script>
+  <!-- Bootstrap Switch -->
+  <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/dist/js/adminlte.js"></script>
+
+  <script src="/dist/js/custom.js"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+  <script>
+    $(function () {
+      // var dataSet = [];
+      // var datatable = $('#DataTable').DataTable({
+      //   'ajax': "/api/faq/search_list?searchType=&searchValue=",
+      //   "sAjaxDataProp": "",
+      //   'columnDefs': [
+      //     {
+      //       data: 'pid',
+      //       render: function (data, type, full, meta) {
+      //         return meta.settings.json.length - meta.row;
+      //       },
+      //       targets: 0,
+      //     },
+      //     {
+      //       data: 'name',
+      //       targets: 1,
+      //     },
+      //     {
+      //       data: 'title',
+      //       targets: 2,
+      //     },
+      //     {
+      //       data: 'regDt',
+      //       render: function (data, type, row) {
+      //         return data.replaceAll('-', '.').substring(0, 10);
+      //       },
+      //       targets: 3,
+      //     },
+      //     {
+      //       data: 'replied',
+      //       render: function (data, type, row) {
+      //         return '<button type="button" class="btn btn-sm btn-outline-' + (row['replied'] ? 'dark' : 'warning') + ' btn-detail" data-id="' + row['pid'] + '">' + (row['replied'] ? '완료' : '대기') + '</button>';
+      //       },
+      //       targets: 4,
+      //     },
+      //     {
+      //       targets: '_all',
+      //       className: 'dt-center',
+      //     }
+      //   ],
+      //   'language': lang_kor,
+      //   "paging": true,
+      //   "lengthChange": false,
+      //   "searching": false,
+      //   "ordering": false,
+      //   "info": true,
+      //   "autoWidth": false,
+      //   "responsive": true,
+      // });
+
+      $(document)
+        .on("change", "#image1", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview1").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("change", "#image2", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview2").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("change", "#image3", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview3").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("change", "#image4", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview4").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("change", "#image5", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview5").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("change", "#image6", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview6").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("change", "#image7", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview7").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("change", "#image8", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview8").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("change", "#image9", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview9").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("change", "#image10", function (e) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            $("#preview10").attr("src", reader.result);
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        })
+        .on("click", "#btn-modify", function () {
+          $("#modal-modify").modal("show");
+        })
+        .on("click", "#btn-confirm", function () {
+          modify();
+        })
+        .on('click', '#address', function () {
+          new daum.Postcode({
+            oncomplete: function (data) {
+              $('#address').val(data['address']);
+            }
+          }).open();
+        })
+        .on('click', '#btn-reg', function () {
+          modify();
+        });
+    });
+
+    function modify() {
+      var formData = new FormData($("#frm")[0]);
+      $.ajax({
+        url: "/api/hotel/add",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        enctype: "multipart/form-data",
+        complete: function (e, xhr, settings) {
+          if (e.status == 200) {
+            location.replace("/manage/hotel");
+          } else {
+            alert("서버 오류입니다.");
+          }
+        },
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tuflex | 매출 관리</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="/plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
+
+  <link rel="stylesheet" href="/dist/css/custom.css">
+</head>
+
+<body class="layout-footer-fixed">
+  <div class="wrapper">
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-link main-logo" style="height: 3rem;">
+        Tuflex
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="/manage/user" class="nav-link">
+                <p>
+                  회원 관리
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/manage/statistics" class="nav-link active">
+                <p>
+                  매출 통계
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/manage/hotel" class="nav-link">
+                <p>
+                  호텔 등록
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+      <button type="button" class="btn btn-primary" id="btn-modify" style="margin-left: 10px; margin-top: 20px;">비밀번호
+        변경하기</button>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <span class="welcome" th:text="'환영합니다. ' + ${name} + '님'"></span><br>
+              <span class="welcome" th:text="'관리자 등급 : ' + ${role}"></span>
+            </div><!-- /.col -->
+            <input th:value="${pid}" type="hidden" id="_pid">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+      <input type="hidden" id="d1" th:value="${dateList[0]}">
+      <input type="hidden" id="d2" th:value="${dateList[1]}">
+      <input type="hidden" id="d3" th:value="${dateList[2]}">
+      <input type="hidden" id="d4" th:value="${dateList[3]}">
+      <input type="hidden" id="d5" th:value="${dateList[4]}">
+      <input type="hidden" id="d6" th:value="${dateList[5]}">
+      <input type="hidden" id="c1" th:value="${countList[0]}">
+      <input type="hidden" id="c2" th:value="${countList[1]}">
+      <input type="hidden" id="c3" th:value="${countList[2]}">
+      <input type="hidden" id="c4" th:value="${countList[3]}">
+      <input type="hidden" id="c5" th:value="${countList[4]}">
+      <input type="hidden" id="c6" th:value="${countList[5]}">
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-6 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3 th:text="${userCount + '명'}"></h3>
+
+                  <p>전체 사용자</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-6 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3 th:text="${count + '건'}"><sup style="font-size: 20px">/일</sup></h3>
+
+                  <p>일 평균 예약 수</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+            <!-- /.row (main row) -->
+          </div>
+          <div class="row">
+            <div class="col-lg-10">
+              <div class="position-relative mb-4">
+                <canvas id="visitors-chart" height="600"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+          <div class="modal fade" id="modal-withdrawal" style="display: none;" aria-modal="true" role="dialog">
+            <div class="modal-dialog" style="width: 300px;">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                  <form id="formWithdrawal">
+                    <input type="hidden" id="withdrawal_pid" name="withdrawal_pid">
+                    <div>정말 탈퇴시키시겠습니까?</div>
+                    <div>
+                      <button type="submit" class="btn btn-primary"
+                        style="width: 100px; margin-bottom: 30px; margin-top: 10px;">확인</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.container-fluid -->
+          <div class="modal fade" id="modal-modify" style="display: none;" aria-modal="true" role="dialog">
+            <div class="modal-dialog" style="max-width: 300px;">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+                  <form id="formModify">
+                    <label>현재 비밀번호</label>
+                    <div class="input-group mb-3">
+                      <input type="password" class="form-control" id="password1" name="passwordOriginal"
+                        placeholder="현재 비밀번호">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <a href="javascript:pw_status(1);"><i class="fa fa-eye-slash" id="eye1"
+                              aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                    <label>현재 비밀번호</label>
+                    <div class="input-group mb-3">
+                      <input type="password" class="form-control" id="password2" name="passwordNew"
+                        placeholder="새 비밀번호">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <a href="javascript:pw_status(2);"><i class="fa fa-eye-slash" id="eye2"
+                              aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                    <label>새 비밀번호 확인</label>
+                    <div class="input-group mb-3">
+                      <input type="password" class="form-control" id="password3" placeholder="새 비밀번호 확인">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <a href="javascript:pw_status(3);"><i class="fa fa-eye-slash" id="eye3"
+                              aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="btn-submit-modify" style="width: 100%;"
+                      disabled>등록하기</button>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-inline-block">
+      </div>
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="/plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <!-- ChartJS -->
+  <script src="/plugins/chart.js/Chart.min.js"></script>
+  <!-- Sparkline -->
+  <script src="/plugins/sparklines/sparkline.js"></script>
+  <!-- JQVMap -->
+  <script src="/plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
+  <!-- daterangepicker -->
+  <script src="/plugins/moment/moment.min.js"></script>
+  <script src="/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Summernote -->
+  <script src="/plugins/summernote/summernote-bs4.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/dist/js/adminlte.js"></script>
+  <script src="plugins/chart.js/Chart.min.js"></script>
+
+  <script src="/dist/js/custom.js"></script>
+
+  <script>
+    $(function () {
+      $(document).on('click', '.btn-detail', function () {
+        location.href = 'user/' + $(this).data('id');
+      }).on('click', '#btn-search', function () {
+        $('#moveForm').submit();
+      }).on('click', '.btn-withdrawal', function () {
+        $('#withdrawal_pid').val($(this).data('id'));
+        $('#modal-withdrawal').modal('show');
+      }).on('submit', '#formWithdrawal', function (e) {
+        e.preventDefault();
+        $.ajax({
+          cache: false, url: "/api/user/withdrawal?pid=" + $('#withdrawal_pid').val(), processData: false, contentType: false, type: 'GET',
+          success: function (data) {
+            datatable.ajax.reload();
+            $('#modal-withdrawal').modal('hide')
+          },
+          error: function (xhr, status) {
+            alert(xhr + " : " + status)
+          }
+        });
+      });
+    });
+    function paging(page) {
+      $('#page').val(page);
+      $('#moveForm').submit();
+    }
+
+
+    var ticksStyle = {
+      fontColor: '#495057',
+      fontStyle: 'bold'
+    }
+
+    var mode = 'index'
+    var intersect = true
+
+    var $visitorsChart = $('#visitors-chart')
+    // eslint-disable-next-line no-unused-vars
+    var visitorsChart = new Chart($visitorsChart, {
+      data: {
+        labels: [$('#d1').val(), $('#d2').val(), $('#d3').val(), $('#d4').val(), $('#d5').val(), $('#d6').val()],
+        datasets: [{
+          type: 'line',
+          data: [$('#c1').val(), $('#c2').val(), $('#c3').val(), $('#c4').val(), $('#c5').val(), $('#c6').val()],
+          backgroundColor: 'transparent',
+          borderColor: '#007bff',
+          pointBorderColor: '#007bff',
+          pointBackgroundColor: '#007bff',
+          fill: false
+          // pointHoverBackgroundColor: '#007bff',
+          // pointHoverBorderColor    : '#007bff'
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          mode: mode,
+          intersect: intersect
+        },
+        hover: {
+          mode: mode,
+          intersect: intersect
+        },
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            // display: false,
+            gridLines: {
+              display: true,
+              lineWidth: '4px',
+              color: 'rgba(0, 0, 0, .2)',
+              zeroLineColor: 'transparent'
+            },
+            ticks: $.extend({
+              beginAtZero: true,
+              suggestedMax: 200
+            }, ticksStyle)
+          }],
+          xAxes: [{
+            display: true,
+            gridLines: {
+              display: false
+            },
+            ticks: ticksStyle
+          }]
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

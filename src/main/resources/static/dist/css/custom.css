@@ -1,0 +1,130 @@
+@font-face {
+    font-family: 'poppins';
+    font-weight: 400;
+    src: url('/dist/font/Poppins-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'poppins';
+    font-weight: 600;
+    src: url('/dist/font/Poppins-SemiBold.ttf');
+}
+
+* {
+    font-family: 'poppins';
+}
+
+.custom-control-input-primary:checked~.custom-control-label::before {
+    background-color: #C4D12D;
+    border-color: #C4D12D;
+}
+
+label:not(.form-check-label):not(.custom-file-label) {
+    font-weight: 400;
+    font-size: 20px;
+    font-style: normal;
+    color: black;
+}
+
+.card {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.form-control {
+    background-color: transparent;
+    border: 1px solid black;
+}
+
+.border {
+    border: 1px solid black !important;
+}
+
+.border-hide {
+    border: 0 !important;
+}
+
+.right-border-hide {
+    border-right: 0 !important;
+}
+
+.login-card-body .input-group .form-control,
+.register-card-body .input-group .form-control {
+    border-right: 1px solid black;
+}
+
+.btn-primary {
+    background-color: #C4D12D;
+    border-color: #C4D12D;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #108854;
+    border-color: #108854;
+}
+
+.btn-primary:disabled {
+    color: #fff;
+    background-color: #C6C6C6;
+    border-color: #C6C6C6;
+}
+
+.login-card-body,
+.register-card-body {
+    background-color: transparent;
+}
+
+.login-logo {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 50px;
+}
+
+.main-logo {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.welcome {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: black;
+}
+
+.modal-dialog {
+    -webkit-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    top: 40%;
+    margin: 0 auto;
+}
+
+.dataTable thead tr th {
+    background-color: #C4D12D;
+    color: white;
+}
+
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active,
+.sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #C4D12D;
+}
+
+.page-item.active .page-link {
+    background-color: #C4D12D;
+}
+
+.pad-top {
+    padding-top: 1rem !important;
+}
+
+.pad-side {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.date {
+    color: #BBBBBB;
+}

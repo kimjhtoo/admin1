@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tuflex | 로그인</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+  <!-- Custom -->
+  <link rel="stylesheet" href="/dist/css/custom.css">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="/index" class="login-logo">Tuflex</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+
+        <form method="post" action="/user/login">
+          <label>연락처</label>
+          <div class="input-group mb-3">
+            <input type="phone" class="form-control" id="phone" name="phone" placeholder="연락처">
+          </div>
+          <label>비밀번호</label>
+          <div class="input-group mb-3 border">
+            <input type="password" class="form-control border-hide" id="password" name="password" placeholder="비밀번호">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <a href="javascript:pw_status();"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+          <p th:if="${param.error}" class="error">일치하는 계정이 없습니다.</p>
+          <div class="row">
+            <!-- /.col -->
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-block">관리자로 로그인</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+        <!-- /.login-card-body -->
+      </div>
+    </div>
+    <!-- /.login-box -->
+    <script>
+      function pw_status() {
+        if ($('#password').attr('type') == 'password') {
+          $('#password').attr('type', 'text');
+          $('.fa-eye-slash').addClass('fa-eye').removeClass('fa-eye-slash');
+        } else {
+          $('#password').attr('type', 'password');
+          $('.fa-eye').addClass('fa-eye-slash').removeClass('fa-eye');
+        }
+      }
+    </script>
+
+    <!-- jQuery -->
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/dist/js/adminlte.min.js"></script>
+</body>
+
+</html>

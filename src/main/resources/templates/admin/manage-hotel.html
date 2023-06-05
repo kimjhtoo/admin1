@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tuflex | 호텔 관리</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="/plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
+
+  <link rel="stylesheet" href="/dist/css/custom.css">
+</head>
+
+<body class="layout-footer-fixed">
+  <div class="wrapper">
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-link main-logo" style="height: 3rem;">
+        Tuflex
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="/manage/user" class="nav-link">
+                <p>
+                  회원 관리
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/manage/statistics" class="nav-link">
+                <p>
+                  매출 통계
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/manage/hotel" class="nav-link active">
+                <p>
+                  호텔 등록
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+      <button type="button" class="btn btn-primary" id="btn-modify" style="margin-left: 10px; margin-top: 20px;">비밀번호
+        변경하기</button>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <span class="welcome" th:text="'환영합니다. ' + ${name} + '님'"></span><br>
+              <span class="welcome" th:text="'관리자 등급 : ' + ${role}"></span>
+            </div><!-- /.col -->
+            <input th:value="${pid}" type="hidden" id="_pid">
+            <div class="col-sm-6">
+              <form id="formSearch" method="get" action="/manage/hotel">
+                <ol class="float-right" style="display: -webkit-box;">
+                  <div class="form-group">
+                    <select class="form-control" id="searchType" name="searchType">
+                      <option>전체</option>
+                      <option value="name">호텔명</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="searchValue" name="searchValue" placeholder="">
+                  </div>
+                  <button type="submit" class="btn btn-primary">검색</button>
+                </ol>
+              </form>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="card-body table-responsive p-0">
+              <table class="table table-bordered table-hover dataTable dtr-inline">
+                <thead>
+                  <tr>
+                    <th>카테고리</th>
+                    <th>호텔명</th>
+                    <th>등록일</th>
+                    <th>별점</th>
+                    <th>상세</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <th:block th:each="hotel, iterator : ${list}">
+                    <tr>
+                      <td th:text="호텔">
+                      </td>
+                      <td th:text="${hotel.getName()}">
+                      </td>
+                      <td th:text="${hotel.getRegDt()}">
+                      </td>
+                      <td th:text="${hotel.getRating()}">
+                      </td>
+                      <td>
+                        <button type="button" th:class="'btn btn-sm btn-outline-dark btn-detail'"
+                          th:data-id="${hotel.getPid()}">조회</button>
+                        <button type="button" th:class="'btn btn-sm btn-outline-dark btn-delete'"
+                          th:data-id="${hotel.getPid()}">삭제</button>
+                      </td>
+                    </tr>
+                  </th:block>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-5">
+              <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"
+                th:text="${pageMaker.getTotal()}+'개'">
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-7">
+              <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                <ul class="pagination">
+                  <block:th th:if="${pageMaker.isPrev()} eq true">
+                    <li class="paginate_button page-item previous"><a class="page-link"
+                        th:href="'javascript:paging('+${pageMaker.getStartPage()-1}+')'"
+                        style="word-break: keep-all;">이전</a></li>
+                  </block:th>
+                  <th:block th:each="num : ${#numbers.sequence(pageMaker.getStartPage(),pageMaker.getEndPage())}">
+                    <block:th th:if="${num} == ${pageMaker.getCri().getPageNum()}">
+                      <li class="paginate_button page-item active"><a class="page-link"
+                          th:href="'javascript:paging('+${num}+')'" th:text="${num}"></a>
+                      </li>
+                    </block:th>
+                    <block:th th:if="${num} != ${pageMaker.getCri().getPageNum()}">
+                      <li class="paginate_button page-item"><a class="page-link"
+                          th:href="'javascript:paging('+${num}+')'" th:text="${num}"></a>
+                      </li>
+                    </block:th>
+                  </th:block>
+                  <block:th th:if="${pageMaker.isNext()} eq true">
+                    <li class="paginate_button page-item next"><a class="page-link"
+                        th:href="'javascript:paging('+${pageMaker.getStartPage()+1}+')'"
+                        style="word-break: keep-all;">다음</a></li>
+                  </block:th>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <form id="moveForm" method="get" action="/manage/hotel">
+            <input type="hidden" name="searchType" th:value="${searchType}">
+            <input type="hidden" name="searchValue" th:value="${searchValue}">
+            <input type="hidden" id="page" name="page" th:value="${pageMaker.getCri().getPageNum() }">
+          </form>
+        </div>
+        <!-- /.row (main row) -->
+    </div>
+    <!-- /.container-fluid -->
+    <div class="modal fade" id="modal-withdrawal" style="display: none;" aria-modal="true" role="dialog">
+      <div class="modal-dialog" style="width: 300px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" style="text-align: center;">
+            <form id="formWithdrawal">
+              <input type="hidden" id="withdrawal_pid" name="withdrawal_pid">
+              <div>정말 탈퇴시키시겠습니까?</div>
+              <div>
+                <button type="submit" class="btn btn-primary"
+                  style="width: 100px; margin-bottom: 30px; margin-top: 10px;">확인</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.container-fluid -->
+    <div class="modal fade" id="modal-modify" style="display: none;" aria-modal="true" role="dialog">
+      <div class="modal-dialog" style="max-width: 300px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" style="text-align: left;">
+            <form id="formModify">
+              <label>현재 비밀번호</label>
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" id="password1" name="passwordOriginal"
+                  placeholder="현재 비밀번호">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <a href="javascript:pw_status(1);"><i class="fa fa-eye-slash" id="eye1" aria-hidden="true"></i></a>
+                  </div>
+                </div>
+              </div>
+              <label>현재 비밀번호</label>
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" id="password2" name="passwordNew" placeholder="새 비밀번호">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <a href="javascript:pw_status(2);"><i class="fa fa-eye-slash" id="eye2" aria-hidden="true"></i></a>
+                  </div>
+                </div>
+              </div>
+              <label>새 비밀번호 확인</label>
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" id="password3" placeholder="새 비밀번호 확인">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <a href="javascript:pw_status(3);"><i class="fa fa-eye-slash" id="eye3" aria-hidden="true"></i></a>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" id="btn-submit-modify" style="width: 100%;"
+                disabled>등록하기</button>
+            </form>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-inline-block">
+      <button type="button" class="btn btn-primary" id="btn-register">등록하기</button>
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="/plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <!-- ChartJS -->
+  <script src="/plugins/chart.js/Chart.min.js"></script>
+  <!-- Sparkline -->
+  <script src="/plugins/sparklines/sparkline.js"></script>
+  <!-- JQVMap -->
+  <script src="/plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
+  <!-- daterangepicker -->
+  <script src="/plugins/moment/moment.min.js"></script>
+  <script src="/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Summernote -->
+  <script src="/plugins/summernote/summernote-bs4.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/dist/js/adminlte.js"></script>
+
+  <script src="/dist/js/custom.js"></script>
+
+  <script>
+    $(function () {
+      $(document).on('click', '.btn-detail', function () {
+        location.href = '/manage/hotel/detail/' + $(this).data('id');
+      }).on('click', '.btn-delete', function () {
+        $.ajax({
+          cache: false, url: "/api/hotel/delete?pid=" + $(this).data('id'), processData: false, contentType: false, type: 'GET',
+          success: function (data) {
+            location.reload()
+          },
+          error: function (xhr, status) {
+            alert(xhr + " : " + status)
+          }
+        });
+      }).on('click', '#btn-search', function () {
+        $('#moveForm').submit();
+      }).on('click', '#btn-register', function () {
+        location.href = '/manage/hotel/add'
+      }).on('submit', '#formWithdrawal', function (e) {
+        e.preventDefault();
+        $.ajax({
+          cache: false, url: "/api/user/withdrawal?pid=" + $('#withdrawal_pid').val(), processData: false, contentType: false, type: 'GET',
+          success: function (data) {
+            datatable.ajax.reload();
+            $('#modal-withdrawal').modal('hide')
+          },
+          error: function (xhr, status) {
+            alert(xhr + " : " + status)
+          }
+        });
+      });
+    });
+    function paging(page) {
+      $('#page').val(page);
+      $('#moveForm').submit();
+    }
+  </script>
+</body>
+
+</html>
